@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Nossa Playlist 💚</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #121212;
+  color: white;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.container {
+  display: flex;
+  height: calc(100vh - 90px);
+}
+
+.sidebar {
+  width: 220px;
+  background-color: #000;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  color: #1DB954;
+}
+
+.sidebar a {
+  display: block;
+  color: #b3b3b3;
+  margin: 12px 0;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  color: white;
+}
+
+.main {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.playlist-header {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.playlist-header img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.play-btn {
+  margin-top: 15px;
+  background: #1DB954;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  margin-top: 40px;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  vertical-align: middle;
+}
+
+th {
+  color: #b3b3b3;
+  border-bottom: 1px solid #333;
+}
+
+tr {
+  cursor: pointer;
+}
+
+tr:hover {
+  background-color: #1a1a1a;
+}
+
+tr.active {
+  background-color: #1DB95422;
+}
+
+.thumb {
+  width: 45px;
+  height: 45px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.phrase-box {
+  margin-top: 25px;
+  background: #1DB95422;
+  padding: 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  display: none;
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #181818;
+  padding: 15px 25px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-top: 1px solid #333;
+}
+
+.player img {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.player-info {
+  flex: 1;
+}
+
+.time {
+  font-size: 12px;
+  color: #b3b3b3;
+  display: flex;
+  justify-content: space-between;
+}
+
+.player-controls button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+
+.progress {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+
+  .playlist-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  table th:nth-child(4),
+  table td:nth-child(4) {
+    display: none;
+  }
+}
+
+/* Estilo da mensagem surpresa */
+#surpresaText {
+  display: none;
+  margin-top: 20px;
+  background: #1DB95444;
+  padding: 20px;
+  border-radius: 12px;
+  font-size: 18px;
+  animation: fadeIn 0.6s ease;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="sidebar">
+    <h2>💚 Nosso Amor</h2>
+    <a href="#inicio">🏠 Início</a>
+    <a href="#surpresa" id="surpresaLink">🎁 Surpresa</a>
+  </div>
+
+  <div class="main">
+
+    <section id="inicio">
+      <div class="playlist-header">
+        <img src="foto da playlist.jpg">
+        <div>
+          <h1>Nossa Playlist 💕</h1>
+          <button class="play-btn" onclick="playPause()">▶ Play</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="playlist">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th></th>
+            <th>Música</th>
+            <th></th>
+            <th>Tempo ⏱</th>
+          </tr>
+        </thead>
+        <tbody id="musicList"></tbody>
+      </table>
+    </section>
+
+    <div id="phraseBox" class="phrase-box"></div>
+
+    <section id="surpresa" style="margin-top:50px;">
+      <h2>💌 Uma mensagem pra você</h2>
+      <p>Eu te amo muito, é a cada dia que passa, meu amor por você só cresce. Sou imensamente grato por ter você na minha vida. Você me faz tão bem, e eu sou muito feliz por ter você ao meu lado. Sei que é simples, mas fiz de coração, e espero que toque seu coração do mesmo jeito que você toca o meu 🤍 </p>
+      <p>EU TE AMO MUITO MINHA PRINCESA</p>
+      <p id="surpresaText">
+        Obrigado por cada momento que compartilhamos, por cada risada, por cada beijo e abraço. Obrigado pelas mordidas, pelas mãos dadas, pelos apelidos e até pelos xingamentos carinhosos. Obrigado por todas as piadas, pelas conversas sérias e por simplesmente ser essa pessoa incrível que você é. Eu te amo muito. 4 meses/∞ 🤍 Mal posso esperar pelo nosso casamento
+      </p>
+    </section>
+
+  </div>
+</div>
+
+<div class="player">
+  <img id="cover">
+  <div class="player-info">
+    <div id="songTitle">Selecione uma música</div>
+    <input type="range" id="progress" class="progress" value="0">
+    <div class="time">
+      <span id="currentTime">0:00</span>
+      <span id="duration">0:00</span>
+    </div>
+  </div>
+  <div class="player-controls">
+    <button onclick="prevMusic()">⏮</button>
+    <button onclick="playPause()">⏯</button>
+    <button onclick="nextMusic()">⏭</button>
+  </div>
+</div>
+
+<audio id="audio"></audio>
+
+<script>
+const playlist = [
+  { title: "Teen Romance", moment: "Nossa música", file: "musica1.mp3", cover: "capa1.jpg", phrase: "Essa música é a trilha sonora do nosso amor 🥰" },
+  { title: "Being in Love with U", moment: "O começo de tudo", file: "musica2.mp3", cover: "capa2.jpg", phrase: "Essa música sempre me lembra do dia em que tudo começou 💕" },
+  { title: "Join Me in Death", moment: "Nosso amor", file: "musica3.mp3", cover: "Join_Me_in_Death.jpg", phrase: "Vou estar para sempre ao seu lado, meu amor 🤍" }
+];
+
+const audio = document.getElementById("audio");
+const list = document.getElementById("musicList");
+const cover = document.getElementById("cover");
+const title = document.getElementById("songTitle");
+const progress = document.getElementById("progress");
+const currentTimeEl = document.getElementById("currentTime");
+const durationEl = document.getElementById("duration");
+const phraseBox = document.getElementById("phraseBox");
+const surpresaLink = document.getElementById("surpresaLink");
+const surpresaText = document.getElementById("surpresaText");
+
+let current = 0;
+let rows = [];
+
+playlist.forEach((music, index) => {
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td>${index + 1}</td>
+    <td><img class="thumb" src="${music.cover}"></td>
+    <td>${music.title}</td>
+    <td>${music.moment}</td>
+    <td id="time-${index}">--:--</td>
+  `;
+  row.onclick = () => loadMusic(index);
+  list.appendChild(row);
+  rows.push(row);
+
+  const temp = new Audio(music.file);
+  temp.onloadedmetadata = () => {
+    document.getElementById(`time-${index}`).textContent = formatTime(temp.duration);
+  };
+});
+
+function loadMusic(index) {
+  rows.forEach(r => r.classList.remove("active"));
+  rows[index].classList.add("active");
+
+  current = index;
+  audio.src = playlist[index].file;
+  cover.src = playlist[index].cover;
+  title.textContent = playlist[index].title;
+
+  phraseBox.style.display = "block";
+  phraseBox.textContent = playlist[index].phrase;
+
+  audio.play();
+}
+
+function playPause() { audio.paused ? audio.play() : audio.pause(); }
+function nextMusic() { loadMusic((current + 1) % playlist.length); }
+function prevMusic() { loadMusic((current - 1 + playlist.length) % playlist.length); }
+
+audio.addEventListener("timeupdate", () => {
+  progress.value = (audio.currentTime / audio.duration) * 100 || 0;
+  currentTimeEl.textContent = formatTime(audio.currentTime);
+});
+
+audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+audio.addEventListener("ended", nextMusic);
+progress.addEventListener("input", () => { audio.currentTime = (progress.value / 100) * audio.duration; });
+
+function formatTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60).toString().padStart(2, "0");
+  return `${m}:${s}`;
+}
+
+// ===== SURPRESA COM SENHA =====
+surpresaLink.addEventListener("click", (e) => {
+  e.preventDefault();
+  const senha = prompt("Digite a senha para ver a surpresa (dica: Uma musica marcante)");
+  if(senha === "dona dos meus gatos") {
+    surpresaText.style.display = "block";
+    surpresaText.scrollIntoView({behavior: "smooth"});
+  } else {
+    alert("Senha incorreta! (Dica: a frase em q eu te pedi em namoro) 💔");
+  }
+});
+</script>
+
+</body>
+</html>
